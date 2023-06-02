@@ -2,9 +2,14 @@
 <html>
 <head>
     <title>Admin Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
-            font-family: Arial, sans-serif;
+                font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
         }
 
         .container {
@@ -47,27 +52,38 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+        form {
+                align-items: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Admin Page</h2>
-        <form action="/detect_forgery" method="POST" enctype="multipart/form-data">
-            <label for="original_image">Original Image</label>
-            <input type="file" id="original_image" name="original_image" accept="image/*" required>
+    <h2>Admin Page</h2>
+    <form action="/admin" method="POST" enctype="multipart/form-data">
+        <label for="original_image">Original Image</label>
+        <input type="file" id="original_image" name="original_image" accept="image/*" required>
 
-            <label for="modified_image">Modified Image</label>
-            <input type="file" id="modified_image" name="modified_image" accept="image/*" required>
+        <label for="modified_image">Modified Image</label>
+        <input type="file" id="modified_image" name="modified_image" accept="image/*" required>
 
-            <input type="submit" value="Detect Forgery">
-        </form>
+        <input type="submit" value="Detect Forgery">
+    </form>
 
-        {% if result %}
-        <div class="result">
-            <h3>Forgery Detection Result:</h3>
-            <p>{{ result }}</p>
-        </div>
-        {% endif %}
+    {% if result %}
+    <div class="result">
+        <h3>Forgery Detection Result:</h3>
+        <p>{{ result }}</p>
     </div>
+
+    {% if modified_image_encoded %}
+    <div>
+        <h3>Modified Image:</h3>
+        <img src="data:image/jpeg;base64,{{ modified_image_encoded }}" alt="Modified Image" width="400">
+    </div>
+    {% endif %}
+    {% endif %}
 </body>
 </html>
