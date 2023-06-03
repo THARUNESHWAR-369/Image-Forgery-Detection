@@ -5,13 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
-            font-family: Arial, sans-serif;
-        }
+                font-family: Arial, sans-serif;
+                align-items: center;
+                margin: 0;
+                color: white;
+                letter-spacing: 1px;
+                background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.6),
+    rgba(0, 0, 0, 0.4)
+  ),url('static/images/1.jpg');
+                width: 100%;
+                height: 100vh;
+                    background-position: top; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; 
+            }
 
         .container {
             width: 300px;
             margin: 0 auto;
             padding-top: 100px;
+            max-width: 70%;
         }
 
         h2 {
@@ -47,11 +62,26 @@
         input[type="submit"]:hover {
             background-color: #45a049;
         }
+
+        .error {
+            border: 1px solid red;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: 2px;
+            background: #ed143d91;
+            color: white;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Login</h2>
+        {% if error != none %}
+            <div class="error">
+                <p>{{error}}</p>
+            </div>
+        {% endif %}
         <form action="/login" method="POST">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" required>

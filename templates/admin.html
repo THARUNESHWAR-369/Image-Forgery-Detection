@@ -1,89 +1,156 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Admin Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
+    <head>
+        <title>Admin Page</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
                 font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-        }
-
-        .container {
-            width: 600px;
-            margin: 0 auto;
-            padding-top: 50px;
-        }
-
-        h2 {
-            text-align: center;
-        }
-
-        label {
-            display: block;
-            margin-top: 20px;
-        }
-
-        input[type="file"] {
-            margin-top: 5px;
-            margin-bottom: 20px;
-        }
-
-        input[type="submit"] {
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-
-        .result {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #f5f5f5;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        form {
+                display: flex;
+                flex-direction: column;
                 align-items: center;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-        }
-    </style>
-</head>
-<body>
-    <h2>Admin Page</h2>
-    <form action="/admin" method="POST" enctype="multipart/form-data">
-        <label for="original_image">Original Image</label>
-        <input type="file" id="original_image" name="original_image" accept="image/*" required>
+                justify-content: center;
+                height: 100vh;
+                margin: 0;
+                color: white;
+                letter-spacing: 1px;
+                background-image: url('static/images/2.jpg');
+                width: 100%;
+                height: 100%;
+            }
 
-        <label for="modified_image">Modified Image</label>
-        <input type="file" id="modified_image" name="modified_image" accept="image/*" required>
+            .container {
+                width: 600px;
+                margin: 0 auto;
+                padding-top: 50px;
+            }
 
-        <input type="submit" value="Detect Forgery">
-    </form>
+            h2 {
+                text-align: center;
+            }
 
-    {% if result %}
-    <div class="result">
-        <h3>Forgery Detection Result:</h3>
-        <p>{{ result }}</p>
-    </div>
+            label {
+                display: block;
+                margin-top: 20px;
+            }
 
-    {% if modified_image_encoded %}
-    <div>
-        <h3>Modified Image:</h3>
-        <img src="data:image/jpeg;base64,{{ modified_image_encoded }}" alt="Modified Image" width="400">
-    </div>
-    {% endif %}
-    {% endif %}
-</body>
+            input[type="file"] {
+                margin-top: 5px;
+                margin-bottom: 20px;
+            }
+
+            input[type="submit"] {
+                padding: 10px;
+                border: 1px solid #4CAF50;
+                color: white;
+                /* border: none; */
+                border-radius: 4px;
+                cursor: pointer;
+                background: transparent;
+                color: #4caf50;
+                letter-spacing: 2px;
+                cursor: pointer;
+            }
+
+            input[type="submit"]:hover {
+                background-color: #45a049;
+                color: white;
+            }
+
+            .result {
+                margin-top: 20px;
+                padding: 15px;
+                background-color: transparent;
+                border: 1px solid springgreen;
+                border-radius: 7px;
+                letter-spacing: 2px;
+                max-width: 70%;
+            }
+            .result h3 {
+                text-align: center;
+            }
+            form {
+                align-items: center;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .btn {
+                margin: 10px;
+            }
+
+            .nav {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .btn a {
+                border: none;
+                outline: none;
+                background: transparent;
+                border: 2px solid crimson;
+                border-radius: 10px;
+                padding: 10px 20px;
+                font-weight: bolder;
+                letter-spacing: 2px;
+                cursor: pointer;
+                color: crimson;
+                text-decoration: none;
+            }
+
+            .btn a:hover {
+                background-color: crimson;
+                color: white;
+            }
+    
+            .mi {
+                width: 450px;
+                align-items: center;
+                text-align: center;
+                max-width: 80%;
+                margin-bottom: 5rem;
+            }
+
+            .mi img {
+                width: 100%;
+                height: 100%;
+                border-radius: 8px;
+                box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.3);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="nav">
+            <h2>Admin Page</h2>
+            <div class="btn">
+                <a href="/logout">Logout</a>
+            </div>
+        </div>
+        <form action="/detect" method="POST" enctype="multipart/form-data">
+            <label for="original_image">Original Image</label>
+            <input type="file" id="original_image" name="original_image" accept="image/*" required>
+
+            <label for="modified_image">Modified Image</label>
+            <input type="file" id="modified_image" name="modified_image" accept="image/*" required>
+
+            <input type="submit" value="Detect Forgery">
+        </form>
+
+        {% if result %}
+            <div class="result">
+                <h3>Forgery Detection Result:</h3>
+                <p>{{ result }}</p>
+            </div>
+
+            {% if modified_image_encoded %}
+                <div class="mi">
+                    <h3>Modified Image:</h3>
+                    <img src="data:image/jpeg;base64,{{ modified_image_encoded }}" alt="Modified Image" width="400">
+                </div>
+            {% endif %}
+        {% endif %}
+    </body>
 </html>
